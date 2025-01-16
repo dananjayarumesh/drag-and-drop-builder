@@ -22,7 +22,8 @@ const onDragEnd = () => {
 <template>
   <div class="grid grid-cols-[20%_80%]">
     <div class="draggable-container">
-      <draggable v-model="list1" class="draggable-list" ghost-class="ghost" @end="onDragEnd">
+      <draggable v-model="list1" class="draggable-list" :sort="false" ghost-class="ghost" @end="onDragEnd"
+        :group="{ name: 'people', pull: 'clone', put: false }">
         <template #item="{ element }">
           <div class="draggable-item">
             {{ element.name }}
@@ -31,7 +32,7 @@ const onDragEnd = () => {
       </draggable>
     </div>
     <div>
-      <draggable v-model="list2" class="draggable-list" ghost-class="ghost" @end="onDragEnd">
+      <draggable v-model="list2" class="draggable-list" ghost-class="ghost" @end="onDragEnd" group="people">
         <template #item="{ element }">
           <div class="draggable-item">
             {{ element.name }}
