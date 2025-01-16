@@ -12,6 +12,15 @@ const list2 = ref([]);
 const onDragEnd = () => {
   console.log("Drag ended. Final list order:", list2.value);
 };
+
+const duplicateComp = (index) => {
+  const comp = list2.value[index];
+  list2.value.splice(index + 1, 0, comp);
+};
+
+const removeComp = (index) => {
+  list2.value.splice(index, 1);
+};
 </script>
 
 <template>
@@ -28,7 +37,8 @@ const onDragEnd = () => {
       </div>
       <div class="flex justify-center">
         <CompContainer v-model="list2" class="draggable-list w-2/4 border mt-11 relative p-12" ghost-class="ghost"
-          @end="onDragEnd" group="components" animation="150" :displayCompOptions="true" />
+          @end="onDragEnd" group="components" animation="150" :displayCompOptions="true" @duplicate="duplicateComp"
+          @remove="removeComp" />
       </div>
     </div>
   </div>

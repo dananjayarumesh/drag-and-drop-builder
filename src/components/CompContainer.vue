@@ -16,9 +16,10 @@ defineProps({
 
 <template>
   <draggable v-bind="$attrs" v-on="$attrs">
-    <template #item="{ element }">
+    <template #item="{ element, index }">
       <div class="group relative">
-        <CompOptions v-if="displayCompOptions" />
+        <CompOptions v-if="displayCompOptions" @duplicate="$emit('duplicate', index)"
+          @remove="$emit('remove', index)" />
         <TextComp v-if="element.type === 'text'" :text="element.text" />
         <ImageComp v-else-if="element.type === 'image'" :image-url="Image" />
       </div>
