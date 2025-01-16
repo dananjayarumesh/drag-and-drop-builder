@@ -1,0 +1,17 @@
+version: '3.7'
+
+services:
+  drag-and-drop-ui:
+    image: drag-and-drop-ui:0.1
+    build: .
+    container_name: drag-and-drop-ui-dev
+    working_dir: /work
+    volumes:
+      - ..:/work
+    environment:
+      - ENVIRONMENT=local
+    networks:
+      - private
+
+networks:
+  private:

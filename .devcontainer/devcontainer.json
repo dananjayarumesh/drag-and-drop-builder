@@ -1,0 +1,44 @@
+// See https://aka.ms/vscode-remote/devcontainer.json for format details.
+{
+   "name": "drag-and-drop-ui",
+   "dockerComposeFile": [
+      "docker-compose.yml"
+   ],
+   // The name of the following service has to match one of the services in docker-compose.yml
+   "service": "drag-and-drop-ui",
+   "workspaceFolder": "/work",
+   "overrideCommand": true,
+   "customizations": {
+      // Configure properties specific to VS Code.
+      "vscode": {
+         // Add the IDs of extensions you want installed when the container is created.
+         "extensions": [
+            "bradlc.vscode-tailwindcss",
+            "firsttris.vscode-jest-runner",
+            "ms-vsliveshare.vsliveshare",
+            "Vue.volar",
+            "vitest.explorer",
+            "dbaeumer.vscode-eslint",
+            "EditorConfig.EditorConfig",
+            "esbenp.prettier-vscode"
+		   ],
+         "settings": {
+            "remote.autoForwardPorts": false,
+            "remote.restoreForwardedPorts": false,
+            "explorer.fileNesting.enabled": true,
+            "explorer.fileNesting.patterns": {
+              "tsconfig.json": "tsconfig.*.json, env.d.ts",
+              "vite.config.*": "jsconfig*, vitest.config.*, cypress.config.*, playwright.config.*",
+              "package.json": "package-lock.json, pnpm*, .yarnrc*, yarn*, .eslint*, eslint*, .prettier*, prettier*, .editorconfig"
+            },
+            "editor.codeActionsOnSave": {
+              "source.fixAll": "explicit"
+            },
+            "editor.formatOnSave": true,
+            "editor.defaultFormatter": "esbenp.prettier-vscode"
+         }
+      }
+   },
+   "shutdownAction": "stopCompose",
+   "remoteUser": "root"
+}
