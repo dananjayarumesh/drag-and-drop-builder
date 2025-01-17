@@ -12,7 +12,7 @@ const imageBlocks = ref([
   { type: 'image', value: defines.blockImages[0] }
 ]);
 
-const list2 = ref([]);
+const addedBlocks = ref([]);
 
 const editData = reactive({
   show: false,
@@ -21,12 +21,12 @@ const editData = reactive({
 });
 
 const duplicateComp = (index) => {
-  const comp = list2.value[index];
-  list2.value.splice(index + 1, 0, comp);
+  const comp = addedBlocks.value[index];
+  addedBlocks.value.splice(index + 1, 0, comp);
 };
 
 const removeComp = (index) => {
-  list2.value.splice(index, 1);
+  addedBlocks.value.splice(index, 1);
 };
 
 const showEdit = (editIndex, element) => {
@@ -42,18 +42,18 @@ const closeEdit = () => {
 const setEditValue = (value) => {
   const editIndex = editData.editIndex;
   let newList = [];
-  list2.value.forEach((element, index) => {
+  addedBlocks.value.forEach((element, index) => {
     if (index === editIndex) {
       newList.push({ ...element, ...{ value: value } });
     } else {
       newList.push(element);
     }
   });
-  list2.value = newList;
+  addedBlocks.value = newList;
 }
 
-const onAdd = (e, originalEvent) => {
-  console.log(e,originalEvent);
+const submitBlockData = () => {
+  console.log(addedBlocks.value);
 }
 </script>
 
@@ -76,13 +76,14 @@ const onAdd = (e, originalEvent) => {
     <div class="max-h-screen overflow-auto">
       <div class="w-full border p-3 text-right">
         <button type="button"
-          class="bg-blue-500 text-white font-bold py-2 px-4 rounded shadow-lg hover:bg-blue-600 focus:outline-none focus:ring-blue-400 focus:ring-offset-2 active:bg-blue-700">Save
+          class="bg-blue-500 text-white font-bold py-2 px-4 rounded shadow-lg hover:bg-blue-600 focus:outline-none focus:ring-blue-400 focus:ring-offset-2 active:bg-blue-700"
+          @click="submitBlockData">Save
           Changes</button>
       </div>
       <div class="flex items-center justify-center">
-        <BlockContainer v-model="list2" :class="'draggable-list w-2/4 border mt-11 mb-11 relative p-10 bg-white'"
-          group="blocks" animation="150" :displayCompOptions="true" @move="onAdd" @duplicate="duplicateComp"
-          @remove="removeComp" @edit="showEdit" itemKey="preview" />
+        <BlockContainer v-model="addedBlocks" :class="'draggable-list w-2/4 border mt-11 mb-11 relative p-10 bg-white'"
+          group="blocks" animation="150" :displayCompOptions="true" @duplicate="duplicateComp" @remove="removeComp"
+          @edit="showEdit" itemKey="preview" />
       </div>
     </div>
   </div>
