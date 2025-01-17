@@ -24,10 +24,9 @@ defineProps({
       </div>
     </template>
     <template #header v-if="$attrs.modelValue && $attrs.modelValue.length === 0">
-      <div class="flex items-center justify-center">
-        <div>Drag elements here</div>
+      <div class="flex items-center justify-center min-h-96">
+        <p class="truncate text-xs/5 text-gray-500">Drag and drop components here.</p>
       </div>
-
     </template>
   </draggable>
 </template>
