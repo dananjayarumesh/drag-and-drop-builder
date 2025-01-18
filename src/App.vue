@@ -94,6 +94,21 @@ const moveDown = (index) => {
   addedBlocks.value = newList;
 };
 
+const addBlock = (type) => {
+  switch (type) {
+    case 'text':
+      addedBlocks.value.push(textBlocks.value[0]);
+      break;
+
+    case 'image':
+      addedBlocks.value.push(imageBlocks.value[0]);
+      break;
+
+    default:
+      break;
+  }
+};
+
 const submitBlockData = () => {
   const blockData = [];
   addedBlocks.value.forEach((element, index) => {
@@ -127,10 +142,7 @@ const submitBlockData = () => {
   <TopBar @save="submitBlockData" />
   <div class="mt-[70px]">
     <div class="h-full fixed bg-white shadow-md z-10">
-      <div class="h-full bg-white shadow-md overflow-auto w-[350px]">
-        <!-- <div class="w-full p-5 bg-black text-white">
-        <h1>Component Picker</h1>
-      </div> -->
+      <div class="h-full bg-white shadow-md overflow-auto hidden sm:block w-[200px] lg:w-[350px]">
         <div class="p-5">
           <div class="border-b mb-2">
             <p class="text-sm/6 font-semibold text-gray-900 mb-2">Text Components</p>
@@ -155,18 +167,28 @@ const submitBlockData = () => {
         </div>
       </div>
     </div>
-    <div class="max-h-screen ml-[350px] relative">
-      <!-- <div class="left-[350px] right-0 p-3 text-right bg-black text-white fixed z-10">
-        <button type="button"
-          class="bg-blue-500 text-white font-bold py-2 px-4 rounded shadow-lg hover:bg-blue-600 focus:outline-none focus:ring-blue-400 focus:ring-offset-2 active:bg-blue-700"
-          @click="submitBlockData">
-          Save Changes
+    <div class="max-h-screen ml-0 sm:ml-[200px] lg:ml-[350px] relative">
+      <div class="sm:hidden px-10 pt-10">
+        <button
+          type="button"
+          class="block mb-2 w-full bg-blue-500 text-white font-bold py-2 px-4 shadow-lg hover:bg-blue-600 focus:outline-none focus:ring-blue-400 focus:ring-offset-2 active:bg-blue-700"
+          @click="addBlock('text')"
+        >
+          Add Text Component
         </button>
-      </div> -->
+        <button
+          type="button"
+          class="block w-full bg-blue-500 text-white font-bold py-2 px-4 shadow-lg hover:bg-blue-600 focus:outline-none focus:ring-blue-400 focus:ring-offset-2 active:bg-blue-700"
+          @click="addBlock('image')"
+        >
+          Add Image Component
+        </button>
+      </div>
+
       <div class="flex items-center justify-center">
         <BlockContainer
           v-model="addedBlocks"
-          :class="'draggable-list w-[700px] min-h-96 border mt-11 mb-11 relative p-10 bg-white'"
+          :class="'draggable-list w-[700px] mx-24 min-h-96 border mt-11 mb-11 relative p-10 bg-white'"
           group="blocks"
           animation="150"
           :touchStartThreshold="50"

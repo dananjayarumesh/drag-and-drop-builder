@@ -1,9 +1,9 @@
 <template>
   <div class="block-options opacity-0 group-hover:opacity-100">
-    <div class="text-right absolute right-0 -top-10 text-white">
+    <div class="text-right absolute right-0 -top-7 sm:-top-8 md:-top-9 text-white">
       <button
         type="button"
-        class="p-2 border bg-green-500 hover:bg-green-600 active:bg-green-700"
+        class="p-1 border bg-green-500 hover:bg-green-600 active:bg-green-700"
         @click="$emit('duplicate')"
       >
         <svg
@@ -12,7 +12,7 @@
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          class="size-6"
+          class="size-4 sm:size-5 md:size-6"
         >
           <path
             stroke-linecap="round"
@@ -23,7 +23,7 @@
       </button>
       <button
         type="button"
-        class="p-2 border bg-blue-500 hover:bg-blue-600 active:bg-blue-700"
+        class="p-1 border bg-blue-500 hover:bg-blue-600 active:bg-blue-700"
         @click="$emit('edit')"
       >
         <svg
@@ -32,7 +32,7 @@
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          class="size-6"
+          class="size-4 sm:size-5 md:size-6"
         >
           <path
             stroke-linecap="round"
@@ -43,14 +43,14 @@
       </button>
       <button
         type="button"
-        class="p-2 border bg-red-500 hover:bg-red-600 active:bg-red-700"
+        class="p-1 border bg-red-500 hover:bg-red-600 active:bg-red-700"
         @click="$emit('remove')"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
           fill="currentColor"
-          class="size-6"
+          class="size-4 sm:size-5 md:size-6"
         >
           <path
             fill-rule="evenodd"
@@ -60,10 +60,10 @@
         </svg>
       </button>
     </div>
-    <div class="text-right absolute left-0 -top-10 text-white">
+    <div class="text-right absolute left-0 -top-7 sm:-top-8 md:-top-9 text-white">
       <button
         type="button"
-        class="p-2 border bg-stone-500 hover:bg-stone-600 active:bg-stone-700"
+        class="p-1 border bg-stone-500 hover:bg-stone-600 active:bg-stone-700"
         @click="$emit('moveDown')"
       >
         <svg
@@ -72,14 +72,14 @@
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          class="size-6"
+          class="size-4 sm:size-5 md:size-6"
         >
           <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
         </svg>
       </button>
       <button
         type="button"
-        class="p-2 border bg-stone-500 hover:bg-stone-600 active:bg-stone-700"
+        class="p-1 border bg-stone-500 hover:bg-stone-600 active:bg-stone-700"
         @click="$emit('moveUp')"
       >
         <svg
@@ -88,7 +88,7 @@
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          class="size-6"
+          class="size-4 sm:size-5 md:size-6"
         >
           <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" />
         </svg>
