@@ -14,10 +14,20 @@ vi.mock('@/defines.js', () => ({
   },
 }));
 
+vi.mock('@/components/TopBar.vue', () => ({
+  default: {
+    name: 'TopBar',
+    template: '<div>TopBarComponent</div>',
+    methods: {
+      save: vi.fn(),
+    },
+  },
+}));
+
 vi.mock('@/components/BlockContainer.vue', () => ({
   default: {
     name: 'BlockContainer',
-    template: '<div></div>',
+    template: '<div>BlockContainerComponent</div>',
     methods: {
       duplicate: vi.fn(),
       remove: vi.fn(),
@@ -30,7 +40,7 @@ vi.mock('@/components/BlockContainer.vue', () => ({
 vi.mock('@/components/EditDialog.vue', () => ({
   default: {
     name: 'EditDialog',
-    template: '<div></div>',
+    template: '<div>EditDialogComponent</div>',
     methods: {
       closed: vi.fn(),
       submit: vi.fn(),
@@ -49,19 +59,27 @@ vi.mock('@/components/EditDialog.vue', () => ({
 }));
 
 describe('App.vue', () => {
+
+  it('check imported components added correctly', () => {
+    const wrapper = mount(AppComponent);
+    expect(wrapper.html()).toContain('TopBarComponent');
+    expect(wrapper.html()).toContain('BlockContainerComponent');
+    expect(wrapper.html()).toContain('EditDialogComponent');
+  });
+
   it('check text blocks showing correctly', () => {
     const wrapper = mount(AppComponent);
     const textBlocksContainer = wrapper.findAllComponents({ name: 'BlockContainer' })[0];
     expect(textBlocksContainer.props().modelValue).toStrictEqual([
       {
         type: 'text',
-        value: 'This is the text component. Feel free to change the value.',
+        value: 'This is the text component. Feel free to change the value. ✨',
       },
     ]);
 
     wrapper.vm.textBlocks.push({ type: 'text', value: 'Text block' });
     expect(textBlocksContainer.props().modelValue).toStrictEqual([
-      { type: 'text', value: 'This is the text component. Feel free to change the value.' },
+      { type: 'text', value: 'This is the text component. Feel free to change the value. ✨' },
       { type: 'text', value: 'Text block' },
     ]);
   });
@@ -131,6 +149,46 @@ describe('App.vue', () => {
     ]);
   });
 
+  it('moves down a block correctly', () => {
+    const wrapper = mount(AppComponent);
+
+    wrapper.vm.addedBlocks.push(
+      { type: 'text', value: 'Text block 1' },
+      { type: 'image', value: 'image_url' },
+      { type: 'text', value: 'Text block 2' },
+    );
+
+    const addedBlocksContainer = wrapper.findAllComponents({ name: 'BlockContainer' })[2];
+    addedBlocksContainer.vm.$emit('moveDown', 1);
+
+    expect(wrapper.vm.addedBlocks.length).toBe(3);
+    expect(wrapper.vm.addedBlocks).toStrictEqual([
+      { type: 'text', value: 'Text block 1' },
+      { type: 'text', value: 'Text block 2' },
+      { type: 'image', value: 'image_url' }
+    ]);
+  });
+
+  it('moves up a block correctly', () => {
+    const wrapper = mount(AppComponent);
+
+    wrapper.vm.addedBlocks.push(
+      { type: 'text', value: 'Text block 1' },
+      { type: 'image', value: 'image_url' },
+      { type: 'text', value: 'Text block 2' },
+    );
+
+    const addedBlocksContainer = wrapper.findAllComponents({ name: 'BlockContainer' })[2];
+    addedBlocksContainer.vm.$emit('moveUp', 1);
+
+    expect(wrapper.vm.addedBlocks.length).toBe(3);
+    expect(wrapper.vm.addedBlocks).toStrictEqual([
+      { type: 'image', value: 'image_url' },
+      { type: 'text', value: 'Text block 1' },
+      { type: 'text', value: 'Text block 2' }
+    ]);
+  });
+
   it('opens edit dialog with correct data', async () => {
     const wrapper = mount(AppComponent);
 
@@ -197,7 +255,8 @@ describe('App.vue', () => {
 
     const consoleSpy = vi.spyOn(console, 'log');
 
-    wrapper.vm.submitBlockData();
+    const topBar = wrapper.findComponent({ name: 'TopBar' });
+    topBar.vm.$emit('save');
 
     expect(consoleSpy).toHaveBeenCalledWith([
       { blockType: 'text', order: 1, text: 'Text block value' },

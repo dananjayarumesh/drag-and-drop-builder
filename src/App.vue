@@ -3,9 +3,10 @@ import { ref, reactive } from 'vue';
 import BlockContainer from './components/BlockContainer.vue';
 import EditDialog from './components/EditDialog.vue';
 import defines from './defines';
+import TopBar from './components/TopBar.vue';
 
 const textBlocks = ref([
-  { type: 'text', value: 'This is the text component. Feel free to change the value.' },
+  { type: 'text', value: 'This is the text component. Feel free to change the value. ✨' },
 ]);
 
 const imageBlocks = ref([{ type: 'image', value: defines.blockImages[0] }]);
@@ -50,6 +51,49 @@ const setEditValue = (value) => {
   addedBlocks.value = newList;
 };
 
+const moveUp = (index) => {
+  if (index === 0) {
+    return;
+  }
+
+  let newList = [];
+  let previousBlock = {};
+  addedBlocks.value.forEach((element, loopIndex) => {
+    if (loopIndex === index - 1) {
+      previousBlock = element;
+    } else {
+      newList.push(element);
+    }
+  });
+
+  newList.splice(index, 0, previousBlock);
+  addedBlocks.value = newList;
+}
+
+const moveDown = (index) => {
+  if (index >= (addedBlocks.value.length - 1)) {
+    return;
+  }
+
+  let newList = [];
+  let nextBlock = {};
+  let movingBlock = {};
+  addedBlocks.value.forEach((element, loopIndex) => {
+    if (loopIndex === index + 1) {
+      nextBlock = element;
+    } else if (loopIndex === index) {
+      movingBlock = element;
+    } else {
+      newList.push(element);
+    }
+  });
+
+  newList.splice(index, 0, nextBlock);
+  newList.splice(index + 1, 0, movingBlock);
+
+  addedBlocks.value = newList;
+}
+
 const submitBlockData = () => {
   const blockData = [];
   addedBlocks.value.forEach((element, index) => {
@@ -80,62 +124,43 @@ const submitBlockData = () => {
 </script>
 
 <template>
-  <div class="grid grid-cols-[20%_80%]">
-    <div class="h-screen bg-white shadow-md overflow-auto">
-      <!-- <div class="w-full border p-3 bg-neutral-600 text-white">
+  <TopBar @save="submitBlockData" />
+  <div class="mt-[70px]">
+    <div class="h-full fixed bg-white shadow-md z-10">
+      <div class="h-full bg-white shadow-md overflow-auto w-[350px]">
+        <!-- <div class="w-full p-5 bg-black text-white">
         <h1>Component Picker</h1>
       </div> -->
-      <div class="p-3">
-        <p class="text-sm/6 font-semibold text-gray-900">Text Components</p>
-        <BlockContainer
-          v-model="textBlocks"
-          :class="'draggable-list'"
-          :sort="false"
-          :group="{ name: 'blocks', pull: 'clone', put: false }"
-          itemKey="textBlocks"
-        />
-
-        <p class="text-sm/6 font-semibold text-gray-900">Image Components</p>
-        <BlockContainer
-          v-model="imageBlocks"
-          :class="'draggable-list'"
-          :sort="false"
-          :group="{ name: 'blocks', pull: 'clone', put: false }"
-          itemKey="imageBlocks"
-        />
+        <div class="p-5">
+          <div class="border-b mb-2">
+            <p class="text-sm/6 font-semibold text-gray-900 mb-2">Text Components</p>
+            <BlockContainer v-model="textBlocks" :class="'draggable-list'" :sort="false"
+              :group="{ name: 'blocks', pull: 'clone', put: false }" itemKey="textBlocks" />
+          </div>
+          <div>
+            <p class="text-sm/6 font-semibold text-gray-900 mb-2">Image Components</p>
+            <BlockContainer v-model="imageBlocks" :class="'draggable-list'" :sort="false"
+              :group="{ name: 'blocks', pull: 'clone', put: false }" itemKey="imageBlocks" />
+          </div>
+        </div>
       </div>
     </div>
-    <div class="max-h-screen overflow-auto">
-      <div class="w-full border p-3 text-right">
-        <button
-          type="button"
+    <div class="max-h-screen ml-[350px] relative">
+      <!-- <div class="left-[350px] right-0 p-3 text-right bg-black text-white fixed z-10">
+        <button type="button"
           class="bg-blue-500 text-white font-bold py-2 px-4 rounded shadow-lg hover:bg-blue-600 focus:outline-none focus:ring-blue-400 focus:ring-offset-2 active:bg-blue-700"
-          @click="submitBlockData"
-        >
+          @click="submitBlockData">
           Save Changes
         </button>
-      </div>
+      </div> -->
       <div class="flex items-center justify-center">
-        <BlockContainer
-          v-model="addedBlocks"
-          :class="'draggable-list w-2/4 border mt-11 mb-11 relative p-10 bg-white'"
-          group="blocks"
-          animation="150"
-          :touchStartThreshold="50"
-          :displayCompOptions="true"
-          @duplicate="duplicateComp"
-          @remove="removeComp"
-          @edit="showEdit"
-          itemKey="preview"
-          placeholder="Drag and drop components here."
-        />
+        <BlockContainer v-model="addedBlocks"
+          :class="'draggable-list w-[700px] min-h-96 border mt-11 mb-11 relative p-10 bg-white'" group="blocks"
+          animation="150" :touchStartThreshold="50" :displayCompOptions="true" @duplicate="duplicateComp"
+          @remove="removeComp" @edit="showEdit" @moveUp="moveUp" @moveDown="moveDown" itemKey="preview"
+          placeholder="Drag and drop components here." />
       </div>
     </div>
   </div>
-  <EditDialog
-    :show="editData.show"
-    :blockData="editData.element"
-    @closed="closeEdit"
-    @submit="setEditValue"
-  />
+  <EditDialog :show="editData.show" :blockData="editData.element" @closed="closeEdit" @submit="setEditValue" />
 </template>

@@ -79,6 +79,8 @@ const unChooseBlock = () => {
           @duplicate="$emit('duplicate', index)"
           @remove="$emit('remove', index)"
           @edit="$emit('edit', index, element)"
+          @moveUp="$emit('moveUp', index)"
+          @moveDown="$emit('moveDown', index)"
         />
         <TextBlock v-if="element.type === 'text'" :text="element.value" />
         <ImageBlock v-else-if="element.type === 'image'" :image-url="element.value" />
@@ -86,7 +88,7 @@ const unChooseBlock = () => {
     </template>
     <template #header v-if="$attrs.modelValue.length === 0 && !disablePlaceholder">
       <div class="flex items-center justify-center min-h-96">
-        <p class="truncate text-xs/5 text-gray-500">{{ placeholder }}</p>
+        <p class="truncate text-sm/5 text-gray-500">{{ placeholder }}</p>
       </div>
     </template>
   </draggable>

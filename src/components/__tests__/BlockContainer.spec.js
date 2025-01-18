@@ -127,7 +127,7 @@ describe('BlockContainer', () => {
     expect(imageBlock.props('imageUrl')).toBe('image-url.jpg');
   });
 
-  it('emits duplicate, remove, and edit events from BlockOptions', async () => {
+  it('emits click events from BlockOptions', async () => {
     const wrapper = mount(BlockContainer, {
       props: {
         modelValue: [
@@ -142,17 +142,24 @@ describe('BlockContainer', () => {
     expect(blockOptions[1].exists()).toBe(true);
 
     blockOptions[1].vm.$emit('duplicate');
-    blockOptions[1].vm.$emit('remove');
-    blockOptions[1].vm.$emit('edit');
-
     expect(wrapper.emitted()).toHaveProperty('duplicate');
     expect(wrapper.emitted().duplicate[0]).toEqual([1]);
 
+    blockOptions[1].vm.$emit('remove');
     expect(wrapper.emitted()).toHaveProperty('remove');
     expect(wrapper.emitted().remove[0]).toEqual([1]);
 
+    blockOptions[1].vm.$emit('edit');
     expect(wrapper.emitted()).toHaveProperty('edit');
     expect(wrapper.emitted().edit[0]).toEqual([1, { type: 'text', value: 'Sample Text 2' }]);
+
+    blockOptions[1].vm.$emit('moveDown');
+    expect(wrapper.emitted()).toHaveProperty('moveDown');
+    expect(wrapper.emitted().moveDown[0]).toEqual([1]);
+
+    blockOptions[1].vm.$emit('moveUp');
+    expect(wrapper.emitted()).toHaveProperty('moveUp');
+    expect(wrapper.emitted().moveDown[0]).toEqual([1]);
   });
 
   it('does not render BlockOptions if displayCompOptions is false', () => {

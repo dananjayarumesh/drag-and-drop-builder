@@ -5,7 +5,7 @@ import BlockOptions from '@/components/BlockOptions.vue';
 describe('ButtonGroupComponent', () => {
   it('emits the "duplicate" event when the duplicate button is clicked', async () => {
     const wrapper = mount(BlockOptions);
-    const duplicateButton = wrapper.find('button.bg-green-600');
+    const duplicateButton = wrapper.findAll('button')[0];
 
     await duplicateButton.trigger('click');
 
@@ -15,7 +15,7 @@ describe('ButtonGroupComponent', () => {
 
   it('emits the "edit" event when the edit button is clicked', async () => {
     const wrapper = mount(BlockOptions);
-    const editButton = wrapper.find('button.bg-blue-600');
+    const editButton = wrapper.findAll('button')[1];
 
     await editButton.trigger('click');
 
@@ -25,12 +25,32 @@ describe('ButtonGroupComponent', () => {
 
   it('emits the "remove" event when the remove button is clicked', async () => {
     const wrapper = mount(BlockOptions);
-    const removeButton = wrapper.find('button.bg-red-600');
+    const removeButton = wrapper.findAll('button')[2];
 
     await removeButton.trigger('click');
 
     expect(wrapper.emitted()).toHaveProperty('remove');
     expect(wrapper.emitted().remove).toHaveLength(1);
+  });
+
+  it('emits the "moveDown" event when the moveDown button is clicked', async () => {
+    const wrapper = mount(BlockOptions);
+    const removeButton = wrapper.findAll('button')[3];
+
+    await removeButton.trigger('click');
+
+    expect(wrapper.emitted()).toHaveProperty('moveDown');
+    expect(wrapper.emitted().moveDown).toHaveLength(1);
+  });
+
+  it('emits the "moveUp" event when the moveUp button is clicked', async () => {
+    const wrapper = mount(BlockOptions);
+    const removeButton = wrapper.findAll('button')[4];
+
+    await removeButton.trigger('click');
+
+    expect(wrapper.emitted()).toHaveProperty('moveUp');
+    expect(wrapper.emitted().moveUp).toHaveLength(1);
   });
 
   it('has the correct classes for hover opacity', () => {
