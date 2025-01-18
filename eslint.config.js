@@ -7,6 +7,23 @@ export default [
   {
     name: 'app/files-to-lint',
     files: ['**/*.{js,mjs,jsx,vue}'],
+    rules: {
+      'quotes': ['error', 'single'],
+      'semi': ['error', 'always'],
+      'indent': ['error', 2],
+      'no-multi-spaces': ['error'],
+      'brace-style': ['error', '1tbs'],
+
+      'no-unused-vars': ['error'],
+      'eqeqeq': ['error', 'always'],
+      'no-debugger': 'error',
+      'curly': ['error', 'all'],
+      'no-undef': 'error',
+      'consistent-return': 'error',
+
+      'vue/no-unused-vars': 'error',
+      'vue/require-default-prop': 'error',
+    }
   },
 
   {
@@ -16,7 +33,7 @@ export default [
 
   js.configs.recommended,
   ...pluginVue.configs['flat/essential'],
-  
+
   {
     ...pluginVitest.configs.recommended,
     files: ['src/**/__tests__/*'],

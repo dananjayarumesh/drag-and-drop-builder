@@ -8,8 +8,8 @@ defineProps({
   displayCompOptions: {
     type: Boolean,
     required: false,
-    default: false
-  }
+    default: false,
+  },
 });
 </script>
 
@@ -17,8 +17,12 @@ defineProps({
   <draggable v-bind="$attrs" v-on="$attrs">
     <template #item="{ element, index }">
       <div class="group relative">
-        <BlockOptions v-if="displayCompOptions" @duplicate="$emit('duplicate', index)" @remove="$emit('remove', index)"
-          @edit="$emit('edit', index, element)" />
+        <BlockOptions
+          v-if="displayCompOptions"
+          @duplicate="$emit('duplicate', index)"
+          @remove="$emit('remove', index)"
+          @edit="$emit('edit', index, element)"
+        />
         <TextBlock v-if="element.type === 'text'" :text="element.value" />
         <ImageBlock v-else-if="element.type === 'image'" :image-url="element.value" />
       </div>
