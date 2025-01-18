@@ -19,7 +19,7 @@ const props = defineProps({
 });
 
 const isClickHolding = ref(false);
-const showPlaceholder = ref(false);
+const disablePlaceholder = ref(false);
 
 const observedElement = ref(null);
 let observer = null;
@@ -38,16 +38,15 @@ onUnmounted(() => {
 
 const trackListChanges = () => {
   observedElement.value = document.querySelector(".draggable-list.with-placeholder");
+  if (observedElement.value !== null) {
+    observer = new MutationObserver(() => {
+      const childElements = observedElement.value.children;
+      const filteredChildren = Array.from(childElements).filter((child) =>
+        child.classList.contains("sortable-block")
+      );
+      disablePlaceholder.value = filteredChildren.length > 0;
+    });
 
-  observer = new MutationObserver(() => {
-    const childElements = observedElement.value.children;
-    const filteredChildren = Array.from(childElements).filter((child) =>
-      child.classList.contains("sortable-block")
-    );
-    showPlaceholder.value = filteredChildren.length > 0;
-  });
-
-  if (observedElement.value) {
     observer.observe(observedElement.value, {
       childList: true
     });
@@ -74,9 +73,9 @@ const unChooseBlock = () => {
         <ImageBlock v-else-if="element.type === 'image'" :image-url="element.value" />
       </div>
     </template>
-    <template #header v-if="($attrs.modelValue && $attrs.modelValue.length === 0) && !showPlaceholder">
+    <template #header v-if="$attrs.modelValue.length === 0 && !disablePlaceholder">
       <div class="flex items-center justify-center min-h-96">
-        <p class="truncate text-xs/5 text-gray-500">Drag and drop components here.</p>
+        <p class="truncate text-xs/5 text-gray-500">{{ placeholder }}</p>
       </div>
     </template>
   </draggable>

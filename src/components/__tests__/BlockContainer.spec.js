@@ -1,17 +1,110 @@
 import { mount } from '@vue/test-utils';
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import BlockContainer from '@/components/BlockContainer.vue';
 import TextBlock from '@/components/TextBlock.vue';
 import ImageBlock from '@/components/ImageBlock.vue';
 import BlockOptions from '@/components/BlockOptions.vue';
 
+const observeMock = vi.fn();
+const disconnectMock = vi.fn();
+globalThis.MutationObserver = vi.fn().mockImplementation((callback) => {
+  callback();
+  return {
+    observe: observeMock,
+    disconnect: disconnectMock
+  };
+});
+
 describe('BlockContainer', () => {
-  it('renders empty state when modelValue is empty', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it('show placeholder when modelValue is empty', () => {
     const wrapper = mount(BlockContainer, {
-      props: { modelValue: [] },
+      props: { modelValue: [], placeholder: 'This is the placeholder' },
     });
 
-    expect(wrapper.html()).toContain('Drag and drop components here.');
+    expect(wrapper.html()).toContain('This is the placeholder');
+  });
+
+  it('hide placeholder when modelValue contains data', () => {
+    const wrapper = mount(BlockContainer, {
+      props: {
+        modelValue: [{ type: 'image', value: 'image-url.jpg' }],
+        placeholder: 'This is the placeholder'
+      },
+    });
+
+    expect(wrapper.html()).not.toContain('This is the placeholder');
+  });
+
+  it('hide placeholder when modelValue contains data but flag is disabled', async () => {
+    const wrapper = mount(BlockContainer, {
+      props: { modelValue: [], placeholder: 'This is the placeholder' },
+    });
+
+    wrapper.vm.disablePlaceholder = true;
+    await wrapper.vm.$nextTick();
+    expect(wrapper.html()).not.toContain('This is the placeholder');
+  });
+
+
+  it('set placeholder show flag to true when no blocks added - mutation observer', async () => {
+    vi.spyOn(document, 'querySelector').mockReturnValue(document.createElement('div'));
+
+    const wrapper = mount(BlockContainer, {
+      props: {
+        modelValue: [],
+        placeholder: 'some-placeholder',
+      },
+    });
+
+    expect(observeMock).toHaveBeenCalledOnce();
+    expect(wrapper.vm.disablePlaceholder).toBe(false);
+  });
+
+  it('set placeholder show flag to false when blocks exists - mutation observer', async () => {
+    const mockElement = document.createElement('div');
+    mockElement.classList.add('draggable-list', 'with-placeholder');
+
+    const child1 = document.createElement('div');
+    child1.classList.add('sortable-block');
+
+    const child2 = document.createElement('div');
+    child1.classList.add('sortable-block');
+
+    mockElement.appendChild(child1);
+    mockElement.appendChild(child2);
+
+    vi.spyOn(document, 'querySelector').mockReturnValue(mockElement);
+
+    const wrapper = mount(BlockContainer, {
+      props: {
+        modelValue: [],
+        placeholder: 'some-placeholder',
+      },
+    });
+
+    expect(observeMock).toHaveBeenCalledOnce();
+    expect(wrapper.vm.disablePlaceholder).toBe(true);
+  });
+
+  it('should observe mutation observer on mount and disable on unmount', async () => {
+    vi.spyOn(document, 'querySelector').mockReturnValue(document.createElement('div'));
+
+    const wrapper = mount(BlockContainer, {
+      props: {
+        modelValue: [],
+        placeholder: 'some-placeholder',
+      },
+    });
+
+    expect(observeMock).toHaveBeenCalledOnce();
+
+    wrapper.unmount();
+
+    expect(disconnectMock).toHaveBeenCalledOnce();
   });
 
   it('renders text block when element type is text', () => {
@@ -73,5 +166,17 @@ describe('BlockContainer', () => {
 
     const blockOptions = wrapper.findComponent(BlockOptions);
     expect(blockOptions.exists()).toBe(false);
+  });
+
+  it('toggle placeholder visibility', () => {
+    const wrapper = mount(BlockContainer, {
+      props: {
+        modelValue: [],
+        displayCompOptions: false,
+        placeholder: 'This is the placeholder'
+      },
+    });
+
+    expect(wrapper.text()).toContain('This is the placeholder');
   });
 });
