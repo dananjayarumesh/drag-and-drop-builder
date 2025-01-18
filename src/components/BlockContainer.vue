@@ -37,38 +37,49 @@ onUnmounted(() => {
 });
 
 const trackListChanges = () => {
-  observedElement.value = document.querySelector(".draggable-list.with-placeholder");
+  observedElement.value = document.querySelector('.draggable-list.with-placeholder');
   if (observedElement.value !== null) {
     observer = new MutationObserver(() => {
       const childElements = observedElement.value.children;
       const filteredChildren = Array.from(childElements).filter((child) =>
-        child.classList.contains("sortable-block")
+        child.classList.contains('sortable-block'),
       );
       disablePlaceholder.value = filteredChildren.length > 0;
     });
 
     observer.observe(observedElement.value, {
-      childList: true
+      childList: true,
     });
   }
-}
+};
 
 const chooseBlock = () => {
-  isClickHolding.value = true
-}
+  isClickHolding.value = true;
+};
 
 const unChooseBlock = () => {
-  isClickHolding.value = false
-}
+  isClickHolding.value = false;
+};
 </script>
 
 <template>
-  <draggable :class="{ 'with-placeholder': props.placeholder }" filter=".block-options" v-bind="$attrs" v-on="$attrs"
-    @choose="chooseBlock" @unchoose="unChooseBlock" dragClass="sortable-drag">
+  <draggable
+    :class="{ 'with-placeholder': props.placeholder }"
+    filter=".block-options"
+    v-bind="$attrs"
+    v-on="$attrs"
+    @choose="chooseBlock"
+    @unchoose="unChooseBlock"
+    dragClass="sortable-drag"
+  >
     <template #item="{ element, index }">
       <div class="sortable-block group relative">
-        <BlockOptions v-if="displayCompOptions && !isClickHolding" @duplicate="$emit('duplicate', index)"
-          @remove="$emit('remove', index)" @edit="$emit('edit', index, element)" />
+        <BlockOptions
+          v-if="displayCompOptions && !isClickHolding"
+          @duplicate="$emit('duplicate', index)"
+          @remove="$emit('remove', index)"
+          @edit="$emit('edit', index, element)"
+        />
         <TextBlock v-if="element.type === 'text'" :text="element.value" />
         <ImageBlock v-else-if="element.type === 'image'" :image-url="element.value" />
       </div>

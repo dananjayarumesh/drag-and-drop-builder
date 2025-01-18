@@ -14,8 +14,8 @@ vi.mock('@/components/TextBlockEdit.vue', () => ({
       },
     },
     emits: ['submit', 'cancel'],
-    template: '<div>{{ initText }}</div>'
-  }
+    template: '<div>{{ initText }}</div>',
+  },
 }));
 
 vi.mock('@/components/ImageBlockEdit.vue', () => ({
@@ -28,8 +28,8 @@ vi.mock('@/components/ImageBlockEdit.vue', () => ({
       },
     },
     emits: ['submit', 'cancel'],
-    template: '<div>{{ initSelected }}</div>'
-  }
+    template: '<div>{{ initSelected }}</div>',
+  },
 }));
 
 describe('EditDialog', () => {
@@ -69,7 +69,7 @@ describe('EditDialog', () => {
       },
       global: {
         stubs: {
-          TransitionRoot: true, 
+          TransitionRoot: true,
           TransitionChild: true,
           Dialog: {
             template: '<div><slot /></div>',

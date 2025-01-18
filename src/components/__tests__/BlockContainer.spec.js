@@ -11,7 +11,7 @@ globalThis.MutationObserver = vi.fn().mockImplementation((callback) => {
   callback();
   return {
     observe: observeMock,
-    disconnect: disconnectMock
+    disconnect: disconnectMock,
   };
 });
 
@@ -32,7 +32,7 @@ describe('BlockContainer', () => {
     const wrapper = mount(BlockContainer, {
       props: {
         modelValue: [{ type: 'image', value: 'image-url.jpg' }],
-        placeholder: 'This is the placeholder'
+        placeholder: 'This is the placeholder',
       },
     });
 
@@ -48,7 +48,6 @@ describe('BlockContainer', () => {
     await wrapper.vm.$nextTick();
     expect(wrapper.html()).not.toContain('This is the placeholder');
   });
-
 
   it('set placeholder show flag to true when no blocks added - mutation observer', async () => {
     vi.spyOn(document, 'querySelector').mockReturnValue(document.createElement('div'));
@@ -133,7 +132,7 @@ describe('BlockContainer', () => {
       props: {
         modelValue: [
           { type: 'text', value: 'Sample Text' },
-          { type: 'text', value: 'Sample Text 2' }
+          { type: 'text', value: 'Sample Text 2' },
         ],
         displayCompOptions: true,
       },
@@ -173,7 +172,7 @@ describe('BlockContainer', () => {
       props: {
         modelValue: [],
         displayCompOptions: false,
-        placeholder: 'This is the placeholder'
+        placeholder: 'This is the placeholder',
       },
     });
 

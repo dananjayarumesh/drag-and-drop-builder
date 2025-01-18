@@ -87,28 +87,55 @@ const submitBlockData = () => {
       </div> -->
       <div class="p-3">
         <p class="text-sm/6 font-semibold text-gray-900">Text Components</p>
-        <BlockContainer v-model="textBlocks" :class="'draggable-list'" :sort="false"
-          :group="{ name: 'blocks', pull: 'clone', put: false }" itemKey="textBlocks" />
+        <BlockContainer
+          v-model="textBlocks"
+          :class="'draggable-list'"
+          :sort="false"
+          :group="{ name: 'blocks', pull: 'clone', put: false }"
+          itemKey="textBlocks"
+        />
 
         <p class="text-sm/6 font-semibold text-gray-900">Image Components</p>
-        <BlockContainer v-model="imageBlocks" :class="'draggable-list'" :sort="false"
-          :group="{ name: 'blocks', pull: 'clone', put: false }" itemKey="imageBlocks" />
+        <BlockContainer
+          v-model="imageBlocks"
+          :class="'draggable-list'"
+          :sort="false"
+          :group="{ name: 'blocks', pull: 'clone', put: false }"
+          itemKey="imageBlocks"
+        />
       </div>
     </div>
     <div class="max-h-screen overflow-auto">
       <div class="w-full border p-3 text-right">
-        <button type="button"
+        <button
+          type="button"
           class="bg-blue-500 text-white font-bold py-2 px-4 rounded shadow-lg hover:bg-blue-600 focus:outline-none focus:ring-blue-400 focus:ring-offset-2 active:bg-blue-700"
-          @click="submitBlockData">
+          @click="submitBlockData"
+        >
           Save Changes
         </button>
       </div>
       <div class="flex items-center justify-center">
-        <BlockContainer v-model="addedBlocks" :class="'draggable-list w-2/4 border mt-11 mb-11 relative p-10 bg-white'"
-          group="blocks" animation="150" :touchStartThreshold="50" :displayCompOptions="true" @duplicate="duplicateComp"
-          @remove="removeComp" @edit="showEdit" itemKey="preview" placeholder="Drag and drop components here." />
+        <BlockContainer
+          v-model="addedBlocks"
+          :class="'draggable-list w-2/4 border mt-11 mb-11 relative p-10 bg-white'"
+          group="blocks"
+          animation="150"
+          :touchStartThreshold="50"
+          :displayCompOptions="true"
+          @duplicate="duplicateComp"
+          @remove="removeComp"
+          @edit="showEdit"
+          itemKey="preview"
+          placeholder="Drag and drop components here."
+        />
       </div>
     </div>
   </div>
-  <EditDialog :show="editData.show" :blockData="editData.element" @closed="closeEdit" @submit="setEditValue" />
+  <EditDialog
+    :show="editData.show"
+    :blockData="editData.element"
+    @closed="closeEdit"
+    @submit="setEditValue"
+  />
 </template>

@@ -10,7 +10,7 @@ vi.mock('@/defines.js', () => ({
       'https://example.com/image3.jpg',
       'https://example.com/image4.jpg',
     ],
-  }
+  },
 }));
 
 describe('ImageBlockEdit', () => {
@@ -23,7 +23,7 @@ describe('ImageBlockEdit', () => {
       },
       global: {
         stubs: { DialodTitle: true },
-      }
+      },
     });
 
     const images = wrapper.findAll('img');
@@ -41,7 +41,7 @@ describe('ImageBlockEdit', () => {
       },
       global: {
         stubs: { DialodTitle: true },
-      }
+      },
     });
 
     const secondImage = wrapper.findAll('img').at(1);

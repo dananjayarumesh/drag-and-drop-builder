@@ -11,7 +11,7 @@ vi.mock('@/defines.js', () => ({
       'https://example.com/image3.jpg',
       'https://example.com/image4.jpg',
     ],
-  }
+  },
 }));
 
 vi.mock('@/components/BlockContainer.vue', () => ({
@@ -23,7 +23,7 @@ vi.mock('@/components/BlockContainer.vue', () => ({
       remove: vi.fn(),
       edit: vi.fn(),
     },
-    props: ['modelValue']
+    props: ['modelValue'],
   },
 }));
 
@@ -38,13 +38,13 @@ vi.mock('@/components/EditDialog.vue', () => ({
     props: {
       show: {
         type: Boolean,
-        required: true
+        required: true,
       },
       blockData: {
         type: Object,
-        required: true
-      }
-    }
+        required: true,
+      },
+    },
   },
 }));
 
@@ -52,30 +52,34 @@ describe('App.vue', () => {
   it('check text blocks showing correctly', () => {
     const wrapper = mount(AppComponent);
     const textBlocksContainer = wrapper.findAllComponents({ name: 'BlockContainer' })[0];
-    expect(textBlocksContainer.props().modelValue).toStrictEqual([{
-      type: 'text',
-      value: 'This is the text component. Feel free to change the value.'
-    }]);
+    expect(textBlocksContainer.props().modelValue).toStrictEqual([
+      {
+        type: 'text',
+        value: 'This is the text component. Feel free to change the value.',
+      },
+    ]);
 
     wrapper.vm.textBlocks.push({ type: 'text', value: 'Text block' });
     expect(textBlocksContainer.props().modelValue).toStrictEqual([
       { type: 'text', value: 'This is the text component. Feel free to change the value.' },
-      { type: 'text', value: 'Text block' }
+      { type: 'text', value: 'Text block' },
     ]);
   });
 
   it('check image blocks showing correctly', () => {
     const wrapper = mount(AppComponent);
     const imageBlocksContainer = wrapper.findAllComponents({ name: 'BlockContainer' })[1];
-    expect(imageBlocksContainer.props().modelValue).toStrictEqual([{
-      type: 'image',
-      value: defines.blockImages[0]
-    }]);
+    expect(imageBlocksContainer.props().modelValue).toStrictEqual([
+      {
+        type: 'image',
+        value: defines.blockImages[0],
+      },
+    ]);
 
     wrapper.vm.imageBlocks.push({ type: 'image', value: defines.blockImages[2] });
     expect(imageBlocksContainer.props().modelValue).toStrictEqual([
       { type: 'image', value: defines.blockImages[0] },
-      { type: 'image', value: defines.blockImages[2] }
+      { type: 'image', value: defines.blockImages[2] },
     ]);
   });
 
@@ -84,12 +88,14 @@ describe('App.vue', () => {
     const addedBlocksContainer = wrapper.findAllComponents({ name: 'BlockContainer' })[2];
 
     wrapper.vm.addedBlocks.push({ type: 'text', value: 'Text block' });
-    expect(addedBlocksContainer.props().modelValue).toStrictEqual([{ type: 'text', value: 'Text block' }]);
+    expect(addedBlocksContainer.props().modelValue).toStrictEqual([
+      { type: 'text', value: 'Text block' },
+    ]);
 
     wrapper.vm.addedBlocks.push({ type: 'image', value: defines.blockImages[1] });
     expect(addedBlocksContainer.props().modelValue).toStrictEqual([
       { type: 'text', value: 'Text block' },
-      { type: 'image', value: defines.blockImages[1] }
+      { type: 'image', value: defines.blockImages[1] },
     ]);
   });
 
@@ -104,7 +110,7 @@ describe('App.vue', () => {
     expect(wrapper.vm.addedBlocks.length).toBe(2);
     expect(wrapper.vm.addedBlocks).toStrictEqual([
       { type: 'text', value: 'Text block to duplicate' },
-      { type: 'text', value: 'Text block to duplicate' }
+      { type: 'text', value: 'Text block to duplicate' },
     ]);
   });
 
@@ -121,7 +127,7 @@ describe('App.vue', () => {
     expect(wrapper.vm.addedBlocks.length).toBe(2);
     expect(wrapper.vm.addedBlocks).toStrictEqual([
       { type: 'text', value: 'Text block 1' },
-      { type: 'text', value: 'Text block 3' }
+      { type: 'text', value: 'Text block 3' },
     ]);
   });
 
@@ -141,7 +147,10 @@ describe('App.vue', () => {
 
     const editDialog = wrapper.findComponent({ name: 'EditDialog' });
     expect(editDialog.props().show).toBe(true);
-    expect(editDialog.props().blockData).toStrictEqual({ type: 'text', value: 'Initial text value' });
+    expect(editDialog.props().blockData).toStrictEqual({
+      type: 'text',
+      value: 'Initial text value',
+    });
   });
 
   it('edit dialog submit with updated values', async () => {
@@ -163,7 +172,7 @@ describe('App.vue', () => {
     expect(wrapper.vm.addedBlocks).toStrictEqual([
       { type: 'text', value: 'Text block 1' },
       { type: 'text', value: 'Updated text value' },
-      { type: 'text', value: 'Text block 3' }
+      { type: 'text', value: 'Text block 3' },
     ]);
   });
 
