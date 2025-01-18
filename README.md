@@ -1,31 +1,34 @@
 # Drag and Drop Editor
 
-This template should help get you started developing with Vue 3 in Vite.
+A sample project includes text and image components drag/drop functionality.
 
-## Recommended IDE Setup
+## Development environment setup
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+This repository is designed to use a development container.
 
-## Customize configuration
+### Prerequisites
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+The prerequisites for working on this repo are:
 
-## Project Setup
+-   Docker Desktop (MacOS, Windows) or docker engine (Linux)
+-   GIT
+-   VS Code
+-   VS Code Extension "Remote Development"
 
-```sh
-npm install
+All other prerequisites are provided by the dev container and its dependencies.
+
+VSCode and other IDEA-based IDEs can use devcontainers to set up the development environment. Simply open the project in the IDE and choose the 'Open in Container' option to get started.
+
+### Install dependencies
+
+```bash
+npm ci
 ```
 
 ### Compile and Hot-Reload for Development
 
 ```sh
 npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
 ```
 
 ### Run Unit Tests with [Vitest](https://vitest.dev/)
