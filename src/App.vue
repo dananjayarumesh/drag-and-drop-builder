@@ -53,7 +53,30 @@ const setEditValue = (value) => {
 }
 
 const submitBlockData = () => {
-  console.log(addedBlocks.value);
+  const blockData = [];
+  addedBlocks.value.forEach((element, index) => {
+    let blockValueData;
+    switch (element.type) {
+      case 'text':
+        blockValueData = { text: element.value, }
+        break;
+
+      case 'image':
+        blockValueData = { imageUrl: element.value, }
+        break;
+
+      default:
+        blockValueData = {};
+        break;
+    }
+    blockData.push({
+      ...{
+        'blockType': element.type,
+        'order': index + 1
+      }, ...blockValueData
+    })
+  })
+  console.log(blockData);
 }
 </script>
 
