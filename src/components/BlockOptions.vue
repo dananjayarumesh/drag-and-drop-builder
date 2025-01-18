@@ -1,6 +1,6 @@
 <template>
   <div
-    class="opacity-0 group-hover:opacity-100 text-right absolute right-0 -top-10 bg-white text-white"
+    class="block-options opacity-0 group-hover:opacity-100 text-right absolute right-0 -top-10 bg-white text-white"
   >
     <button type="button" class="p-2 border bg-green-600" @click="$emit('duplicate')">
       <svg
