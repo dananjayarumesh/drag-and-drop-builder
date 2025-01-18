@@ -4,9 +4,11 @@
       <p class="text-lg">Drag & Drop Editor</p>
     </div>
     <div class="text-right">
-      <button type="button"
+      <button
+        type="button"
         class="bg-green-500 text-white font-bold py-2 px-4 shadow-lg hover:bg-green-600 focus:outline-none focus:ring-green-400 focus:ring-offset-2 active:bg-green-700"
-        @click="$emit('save')">
+        @click="$emit('save')"
+      >
         Save Changes
       </button>
     </div>

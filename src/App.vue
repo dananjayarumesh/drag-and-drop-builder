@@ -68,10 +68,10 @@ const moveUp = (index) => {
 
   newList.splice(index, 0, previousBlock);
   addedBlocks.value = newList;
-}
+};
 
 const moveDown = (index) => {
-  if (index >= (addedBlocks.value.length - 1)) {
+  if (index >= addedBlocks.value.length - 1) {
     return;
   }
 
@@ -92,7 +92,7 @@ const moveDown = (index) => {
   newList.splice(index + 1, 0, movingBlock);
 
   addedBlocks.value = newList;
-}
+};
 
 const submitBlockData = () => {
   const blockData = [];
@@ -134,13 +134,23 @@ const submitBlockData = () => {
         <div class="p-5">
           <div class="border-b mb-2">
             <p class="text-sm/6 font-semibold text-gray-900 mb-2">Text Components</p>
-            <BlockContainer v-model="textBlocks" :class="'draggable-list'" :sort="false"
-              :group="{ name: 'blocks', pull: 'clone', put: false }" itemKey="textBlocks" />
+            <BlockContainer
+              v-model="textBlocks"
+              :class="'draggable-list'"
+              :sort="false"
+              :group="{ name: 'blocks', pull: 'clone', put: false }"
+              itemKey="textBlocks"
+            />
           </div>
           <div>
             <p class="text-sm/6 font-semibold text-gray-900 mb-2">Image Components</p>
-            <BlockContainer v-model="imageBlocks" :class="'draggable-list'" :sort="false"
-              :group="{ name: 'blocks', pull: 'clone', put: false }" itemKey="imageBlocks" />
+            <BlockContainer
+              v-model="imageBlocks"
+              :class="'draggable-list'"
+              :sort="false"
+              :group="{ name: 'blocks', pull: 'clone', put: false }"
+              itemKey="imageBlocks"
+            />
           </div>
         </div>
       </div>
@@ -154,13 +164,28 @@ const submitBlockData = () => {
         </button>
       </div> -->
       <div class="flex items-center justify-center">
-        <BlockContainer v-model="addedBlocks"
-          :class="'draggable-list w-[700px] min-h-96 border mt-11 mb-11 relative p-10 bg-white'" group="blocks"
-          animation="150" :touchStartThreshold="50" :displayCompOptions="true" @duplicate="duplicateComp"
-          @remove="removeComp" @edit="showEdit" @moveUp="moveUp" @moveDown="moveDown" itemKey="preview"
-          placeholder="Drag and drop components here." />
+        <BlockContainer
+          v-model="addedBlocks"
+          :class="'draggable-list w-[700px] min-h-96 border mt-11 mb-11 relative p-10 bg-white'"
+          group="blocks"
+          animation="150"
+          :touchStartThreshold="50"
+          :displayCompOptions="true"
+          @duplicate="duplicateComp"
+          @remove="removeComp"
+          @edit="showEdit"
+          @moveUp="moveUp"
+          @moveDown="moveDown"
+          itemKey="preview"
+          placeholder="Drag and drop components here."
+        />
       </div>
     </div>
   </div>
-  <EditDialog :show="editData.show" :blockData="editData.element" @closed="closeEdit" @submit="setEditValue" />
+  <EditDialog
+    :show="editData.show"
+    :blockData="editData.element"
+    @closed="closeEdit"
+    @submit="setEditValue"
+  />
 </template>

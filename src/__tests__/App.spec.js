@@ -59,7 +59,6 @@ vi.mock('@/components/EditDialog.vue', () => ({
 }));
 
 describe('App.vue', () => {
-
   it('check imported components added correctly', () => {
     const wrapper = mount(AppComponent);
     expect(wrapper.html()).toContain('TopBarComponent');
@@ -165,7 +164,7 @@ describe('App.vue', () => {
     expect(wrapper.vm.addedBlocks).toStrictEqual([
       { type: 'text', value: 'Text block 1' },
       { type: 'text', value: 'Text block 2' },
-      { type: 'image', value: 'image_url' }
+      { type: 'image', value: 'image_url' },
     ]);
   });
 
@@ -185,7 +184,7 @@ describe('App.vue', () => {
     expect(wrapper.vm.addedBlocks).toStrictEqual([
       { type: 'image', value: 'image_url' },
       { type: 'text', value: 'Text block 1' },
-      { type: 'text', value: 'Text block 2' }
+      { type: 'text', value: 'Text block 2' },
     ]);
   });
 
