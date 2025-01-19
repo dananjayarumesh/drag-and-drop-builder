@@ -2,6 +2,7 @@
 import { ref, reactive } from 'vue';
 import BlockContainer from './components/BlockContainer.vue';
 import EditDialog from './components/EditDialog.vue';
+import AddBlockButtons from './components/AddBlockButtons.vue';
 import defines from './defines';
 import TopBar from './components/TopBar.vue';
 
@@ -171,23 +172,8 @@ const submitBlockData = () => {
       </div>
     </div>
     <div class="max-h-screen ml-0 sm:ml-[200px] lg:ml-[350px] relative">
-      <div class="sm:hidden px-10 pt-10">
-        <button
-          type="button"
-          class="block mb-2 w-full bg-blue-500 text-white font-bold py-2 px-4 shadow-lg hover:bg-blue-600 focus:outline-none focus:ring-blue-400 focus:ring-offset-2 active:bg-blue-700"
-          @click="addBlock('text')"
-        >
-          Add Text Component
-        </button>
-        <button
-          type="button"
-          class="block w-full bg-blue-500 text-white font-bold py-2 px-4 shadow-lg hover:bg-blue-600 focus:outline-none focus:ring-blue-400 focus:ring-offset-2 active:bg-blue-700"
-          @click="addBlock('image')"
-        >
-          Add Image Component
-        </button>
-      </div>
-
+      <!-- this only will be shown in smaller devices that hard to perform drag functionality -->
+      <AddBlockButtons @addBlock="addBlock" />
       <div class="flex items-center justify-center">
         <BlockContainer
           v-model="addedBlocks"

@@ -58,12 +58,23 @@ vi.mock('@/components/EditDialog.vue', () => ({
   },
 }));
 
+vi.mock('@/components/AddBlockButtons.vue', () => ({
+  default: {
+    name: 'AddBlockButtons',
+    template: '<div>AddBlockButtonsComponent</div>',
+    methods: {
+      addBlock: vi.fn(),
+    },
+  },
+}));
+
 describe('App.vue', () => {
   it('check imported components added correctly', () => {
     const wrapper = mount(AppComponent);
     expect(wrapper.html()).toContain('TopBarComponent');
     expect(wrapper.html()).toContain('BlockContainerComponent');
     expect(wrapper.html()).toContain('EditDialogComponent');
+    expect(wrapper.html()).toContain('AddBlockButtons');
   });
 
   it('check text blocks showing correctly', () => {
@@ -260,6 +271,28 @@ describe('App.vue', () => {
     expect(consoleSpy).toHaveBeenCalledWith([
       { blockType: 'text', order: 1, text: 'Text block value' },
       { blockType: 'image', order: 2, imageUrl: defines.blockImages[0] },
+    ]);
+  });
+
+  it('add text component when click add button', () => {
+    const wrapper = mount(AppComponent);
+
+    wrapper.vm.imageBlocks = [{ type: 'image', value: 'image_url' }];
+
+    wrapper.vm.textBlocks = [{ type: 'text', value: 'Text block' }];
+
+    const addBlockButtons = wrapper.findComponent({ name: 'AddBlockButtons' });
+    addBlockButtons.vm.$emit('addBlock', 'text');
+
+    expect(wrapper.vm.addedBlocks.length).toBe(1);
+    expect(wrapper.vm.addedBlocks).toStrictEqual([{ type: 'text', value: 'Text block' }]);
+
+    addBlockButtons.vm.$emit('addBlock', 'image');
+
+    expect(wrapper.vm.addedBlocks.length).toBe(2);
+    expect(wrapper.vm.addedBlocks).toStrictEqual([
+      { type: 'text', value: 'Text block' },
+      { type: 'image', value: 'image_url' },
     ]);
   });
 

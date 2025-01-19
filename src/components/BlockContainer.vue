@@ -64,9 +64,9 @@ const unChooseBlock = () => {
 
 <template>
   <draggable
-    :class="{ 
-      'with-placeholder': props.placeholder, 
-      '!p-0': $attrs.modelValue.length === 0 && !disablePlaceholder 
+    :class="{
+      'with-placeholder': props.placeholder,
+      '!p-0': $attrs.modelValue.length === 0 && !disablePlaceholder,
     }"
     filter=".block-options"
     v-bind="$attrs"
