@@ -13,14 +13,3 @@ RUN apt-get update
 RUN apt-get install -y \
     lsb-release \
     curl
-    
-################################################################################
-# Install TypeScript
-# RUN npm install -g typescript@5.1.6
-# More recent version may be available at https://www.npmjs.com/package/typescript
-
-
-################################################################################
-# Install Expo Client
-# RUN npm install -g expo-cli@6.0.1
-# Newer version may be available at https://www.npmjs.com/package/expo-cli
