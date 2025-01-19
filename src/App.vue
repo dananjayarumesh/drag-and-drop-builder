@@ -5,12 +5,15 @@ import EditDialog from './components/EditDialog.vue';
 import defines from './defines';
 import TopBar from './components/TopBar.vue';
 
+// list of text blocks that can be picked
 const textBlocks = ref([
   { type: 'text', value: 'This is the text component. Feel free to change the value. ✨' },
 ]);
 
+// list of image blocks that can be picked
 const imageBlocks = ref([{ type: 'image', value: defines.blockImages[0] }]);
 
+// added blocks list
 const addedBlocks = ref([]);
 
 const editData = reactive({
