@@ -104,6 +104,6 @@ imageUrl - Url of the image added to the block (This will only appear for image 
 
 ## Test Coverage
 
-Unit tests have been added for all components of the application and are located in a folder named __tests__, placed in the same directory as the corresponding component.
+Unit tests have been added for all components of the application and are located in a folder named `__tests__`, placed in the same directory as the corresponding component.
 
 
