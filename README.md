@@ -1,6 +1,6 @@
 # Drag and Drop Editor
 
-A sample project includes text and image components drag/drop functionality.
+The sample project that includes drag-and-drop functionality for both text and image components.
 
 ### Overview
 
