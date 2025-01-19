@@ -6,6 +6,7 @@ A sample project includes text and image components drag/drop functionality.
 
 - [Development Environment Setup](#development-environment-setup)
 - [How To Use (Instructions)](#how-to-use)
+- [Test Coverage](#test-coverage)
 
 ## Development Environment Setup
 
@@ -100,3 +101,9 @@ imageUrl - Url of the image added to the block (This will only appear for image 
 ```
 
 <img src="resources/how-to-save.gif" alt="Edit text" width="500">
+
+## Test Coverage
+
+Unit tests have been added for all components of the application and are located in a folder named __tests__, placed in the same directory as the corresponding component.
+
+
