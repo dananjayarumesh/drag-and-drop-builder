@@ -188,9 +188,9 @@ const submitBlockData = () => {
       <div class="flex items-center justify-center">
         <BlockContainer
           v-model="addedBlocks"
-          :class="'draggable-list w-[700px] mx-24 min-h-96 border mt-11 mb-11 relative p-10 bg-white'"
-          group="blocks"
-          animation="150"
+          class="draggable-list w-[700px] mx-24 min-h-[500px] border mt-[7vh] mb-11 relative p-5 sm:p-10 bg-white"
+          :group="'blocks'"
+          :animation="150"
           :touchStartThreshold="50"
           :displayCompOptions="true"
           @duplicate="duplicateComp"
@@ -198,8 +198,8 @@ const submitBlockData = () => {
           @edit="showEdit"
           @moveUp="moveUp"
           @moveDown="moveDown"
-          itemKey="preview"
-          placeholder="Drag and drop components here."
+          :itemKey="'preview'"
+          :placeholder="'Drag and drop components here.'"
         />
       </div>
     </div>

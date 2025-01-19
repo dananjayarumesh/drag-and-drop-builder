@@ -13,7 +13,7 @@ const props = defineProps({
   },
   placeholder: {
     type: String,
-    required: true,
+    required: false,
     default: '',
   },
 });
@@ -64,16 +64,18 @@ const unChooseBlock = () => {
 
 <template>
   <draggable
-    :class="{ 'with-placeholder': props.placeholder }"
+    :class="{ 
+      'with-placeholder': props.placeholder, 
+      '!p-0': $attrs.modelValue.length === 0 && !disablePlaceholder 
+    }"
     filter=".block-options"
     v-bind="$attrs"
-    v-on="$attrs"
     @choose="chooseBlock"
     @unchoose="unChooseBlock"
     dragClass="sortable-drag"
   >
     <template #item="{ element, index }">
-      <div class="sortable-block group relative">
+      <div class="sortable-block group relative select-none">
         <BlockOptions
           v-if="displayCompOptions && !isClickHolding"
           @duplicate="$emit('duplicate', index)"
@@ -87,7 +89,7 @@ const unChooseBlock = () => {
       </div>
     </template>
     <template #header v-if="$attrs.modelValue.length === 0 && !disablePlaceholder">
-      <div class="flex items-center justify-center min-h-96">
+      <div class="flex items-center justify-center min-h-[500px] mx-4">
         <p class="truncate text-sm/5 text-gray-500">{{ placeholder }}</p>
       </div>
     </template>
