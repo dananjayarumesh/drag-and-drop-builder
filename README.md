@@ -1,6 +1,6 @@
 # Drag and Drop Editor
 
-Sample project that includes drag-and-drop functionality for both text and image components.
+A sample project that includes drag-and-drop functionality for both text and image components, built using Vue.js and the VueDraggable (Sortable.js wrapper) library.
 
 ### Overview
 
@@ -65,7 +65,7 @@ To use drag functionality, hold down the mouse button and drag the corresponding
 
 <img src="resources/how-to-sort-by-drag.gif" alt="Sort by drag" width="500">
 
-To use the buttons, hover over the corresponding clock and click on the sort buttons that appear at the top-left corner of the block.
+To use the buttons, hover over the corresponding block and click on the sort buttons that appear at the top-left corner of the block.
 
 <img src="resources/how-to-sort-by-buttons.gif" alt="Sort by buttons" width="500">
 
